@@ -40,6 +40,8 @@ public class NaivePlayer extends Player {
     	double value;
     	int depth = 3;
     	Board b1 = b.clone();
+		double resultValue = depth*MIN_VALUE;
+		Move bestmove = 0;
         List<Move> moves = b1.getMovesFor(getColor());
 		double[][] movement_values = new double[moves.size()][3];
         for (int i =0; i < moves.size(); i++) {
@@ -48,8 +50,11 @@ public class NaivePlayer extends Player {
         	b1.undoMove(moves.get(i));
         	movement_values[i][0]=value;
 			movement_values[i][1]=i; //movement id number
+			if (value > resultValue) {
+				bestmove = moves.get(i);
+				resultValue = value;	}	
         }
-        return moves.get(0);
+        return bestmove;
     }
     
     
